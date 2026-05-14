@@ -7,7 +7,7 @@ from pathlib import Path
 try:
     from google import genai
     from google.genai import types
-except Exception:  # pragma: no cover - import handled at runtime
+except (ImportError, ModuleNotFoundError):  # pragma: no cover - import handled at runtime
     genai = None
     types = None
 

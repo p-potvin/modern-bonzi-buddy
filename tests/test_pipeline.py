@@ -52,3 +52,37 @@ def test_pipeline_process_text_uses_translation_then_tts():
         ("translate", "hello", "english", "french"),
         ("synthesize", "bonjour", "french"),
     ]
+
+
+def test_pipeline_process_text_propagates_translation_failure():
+    class FakeTTS:
+        def translate_text(self, text: str, source_language: str, target_language: str) -> str:
+            raise RuntimeError("translation failed")
+
+        def synthesize(self, text: str, language: str) -> bytes:
+            return b"unused"
+
+    pipeline = RealtimeTtsPipeline(
+        PipelineSettings(source_language="english", target_language="french"),
+        tts=FakeTTS(),
+    )
+
+    with pytest.raises(RuntimeError, match="translation failed"):
+        pipeline.process_text("hello")
+
+
+def test_pipeline_process_text_propagates_tts_failure():
+    class FakeTTS:
+        def translate_text(self, text: str, source_language: str, target_language: str) -> str:
+            return "bonjour"
+
+        def synthesize(self, text: str, language: str) -> bytes:
+            raise RuntimeError("synthesis failed")
+
+    pipeline = RealtimeTtsPipeline(
+        PipelineSettings(source_language="english", target_language="french"),
+        tts=FakeTTS(),
+    )
+
+    with pytest.raises(RuntimeError, match="synthesis failed"):
+        pipeline.process_text("hello")
