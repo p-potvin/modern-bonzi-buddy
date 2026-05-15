@@ -12,8 +12,13 @@ dependencies = [
   "PySide6>=6.7.0",
   "google-genai>=0.5.0",
   "numpy>=1.26.0",
+  # soundcard provides WASAPI loopback (Windows) / PulseAudio (Linux) for
+  # capturing system audio output without needing virtual cables.
+  "soundcard>=0.4.6",
+  # sounddevice is used ONLY for TTS playback (sd.play with float32 numpy),
+  # not for audio capture.  Always pass float32 arrays to avoid costly
+  # internal resampling.
   "sounddevice>=0.4.6",
-  "soundfile>=0.12.1",
   "silero-vad>=5.1.2",
   "torch>=2.3.0",
   "torchaudio>=2.3.0",
@@ -27,6 +32,7 @@ dev = [
 
 [project.scripts]
 modern-bonzi-buddy = "modern_bonzi_buddy.main:main"
+modern-bonzi-buddy-bench = "modern_bonzi_buddy.benchmarks.pipeline_benchmark:_cli"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
