@@ -194,7 +194,7 @@ class PipelineBenchmark:
         """Return a float32 chunk that looks like quiet speech (above noise floor)."""
         return (np.random.randn(self.blocksize).astype(np.float32) * 0.05).clip(-1.0, 1.0)
 
-    def _make_tts(self):  # noqa: ANN201
+    def _make_tts(self) -> "GeminiFlashTTS | _MockTTS":
         if self.real_tts:
             from modern_bonzi_buddy.services.gemini_flash_tts import GeminiFlashTTS
 

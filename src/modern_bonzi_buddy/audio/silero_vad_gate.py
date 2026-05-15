@@ -1,7 +1,7 @@
 """
 Silero VAD wrapper for real-time speech activity detection.
 
-Ported from realtime-stt with the following optimisations retained:
+Ported from realtime-stt with the following optimizations retained:
 - Absolute silence gate prevents feeding hardware noise floor into the stateful model
 - Native ``np.abs(x).max()`` peak calculation is ~2x faster than ``np.max(np.abs(x))``
 - Float32 normalisation avoids GPU tensor copies where possible

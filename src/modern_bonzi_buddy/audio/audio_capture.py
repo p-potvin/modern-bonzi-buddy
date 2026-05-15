@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 
 try:
     import soundcard as sc  # type: ignore[import-untyped]
-except (ImportError, ModuleNotFoundError, OSError):  # OSError when libpulse/libcoreAudio missing
+except (ImportError, ModuleNotFoundError, OSError):  # OSError when libpulse/libcoreaudio missing
     sc = None  # type: ignore[assignment]
 
 # Minimum amplitude to treat as a real signal rather than hardware noise floor.

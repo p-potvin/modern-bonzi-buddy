@@ -62,11 +62,9 @@ def test_pipeline_benchmark_run_mock_completes():
     bench = PipelineBenchmark(iterations=2, real_tts=False)
     report = bench.run()
 
-    assert len(report.stages) == 4
-    stage_names = [s.name for s in report.stages]
-    assert "audio_buffer" in stage_names
-    assert "translate" in stage_names
-    assert "tts_synth" in stage_names
+    expected_names = {"audio_buffer", "vad_gate (bypass)", "translate", "tts_synth"}
+    actual_names = {s.name for s in report.stages}
+    assert expected_names == actual_names
 
 
 def test_pipeline_benchmark_mock_stages_all_ok():
