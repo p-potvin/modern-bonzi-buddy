@@ -84,7 +84,7 @@ System speakers (loopback)
 **Why no `.wav` files?**
 Encoding/decoding `.wav` adds ~5–15 ms of latency and O(N) disk I/O on every
 chunk. We pass `float32` numpy arrays through in-memory `queue.Queue` buffers,
-matching the pattern in `realtime-stt`'s `AudioRecorder`.
+matching the pattern in `vaultwares-realtime`'s `AudioRecorder`.
 
 **Why `soundcard` over `sounddevice` for capture?**
 `soundcard` wraps WASAPI (Windows) and PulseAudio/ALSA (Linux) with first-class
